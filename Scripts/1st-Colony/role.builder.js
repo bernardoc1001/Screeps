@@ -27,12 +27,12 @@ var roleBuilder = {
             }
         }
         else{
-            var energyTargets = creep.room.find(FIND_STRUCTURES, {
+            var energyTarget = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: (energyStores) => energyStores.structureType == STRUCTURE_CONTAINER &&
                 energyStores.store[RESOURCE_ENERGY] > 0
             });
-            if(creep.withdraw(energyTargets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
-                creep.moveTo(energyTargets[0]);
+            if(creep.withdraw(energyTarget, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+                creep.moveTo(energyTarget);
             }
         }
     }

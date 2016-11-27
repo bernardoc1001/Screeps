@@ -9,7 +9,7 @@ var roleHarvester = {
             }
         }
         else {
-            var targets = creep.room.find(FIND_STRUCTURES, {
+            var energyTarget = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: (structure) => {
                     return (//structure.structureType == STRUCTURE_EXTENSION ||
                         structure.structureType == STRUCTURE_CONTAINER) &&
@@ -18,9 +18,9 @@ var roleHarvester = {
                         structure.store[RESOURCE_ENERGY] < structure.storeCapacity;}
                     //structure.energy < structure.energyCapacity;}
             });
-            if(targets.length > 0) {
-                if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets[0]);
+            if(energyTarget != undefined) {
+                if(creep.transfer(energyTarget, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(energyTarget);
                 }
             }else {
                 creep.moveTo(Game.flags['Flag1']);
