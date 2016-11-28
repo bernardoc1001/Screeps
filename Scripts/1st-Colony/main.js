@@ -52,7 +52,7 @@ module.exports.loop = function () {
     }
 
     else if(tempHarvesters.length < 1){
-        var newName = Game.spawns['Spawn1'].createCreep([WORK,WORK,CARRY,CARRY,MOVE, MOVE], ('tH' + timeCreated), {role: 'tempHarvester'});
+        var newName = Game.spawns['Spawn1'].createCreep([WORK,WORK,CARRY,CARRY,CARRY, MOVE,MOVE], ('tH' + timeCreated), {role: 'tempHarvester'});
         console.log('Current temp-harvester count = ' + tempHarvesters.length +
             '\nSpawning new temp-harvester: ' + newName);
     }
@@ -63,18 +63,16 @@ module.exports.loop = function () {
         console.log('Current courier count = ' + couriers.length +
             '\nSpawning new courier: ' + newName);
     }
+    else if(builders.length < 4){
+        var newName = Game.spawns['Spawn1'].createCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE], ('b' + timeCreated), {role: 'builder'});
+        console.log('Current builder count = ' + builders.length +
+            '\nSpawning new builder: ' + newName);
+    }
     else if(upgraders.length < 3){
         var newName = Game.spawns['Spawn1'].createCreep([WORK, WORK, CARRY, CARRY,CARRY, MOVE, MOVE], ('u' + timeCreated), {role: 'upgrader'});
         console.log('Current upgrader count = ' + upgraders.length +
                     '\nSpawning new upgrader: ' + newName);
     }
-
-    else if(builders.length < 4){
-        var newName = Game.spawns['Spawn1'].createCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE], ('b' + timeCreated), {role: 'builder'});
-        console.log('Current builder count = ' + builders.length +
-                    '\nSpawning new builder: ' + newName);
-    }
-
     else if(repairers.length < 2){
         var newName = Game.spawns['Spawn1'].createCreep([WORK, CARRY, CARRY, MOVE, MOVE], ('r' + timeCreated), {role: 'repairer'});
         console.log('Current repairer count = ' + repairers.length +
