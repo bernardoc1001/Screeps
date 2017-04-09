@@ -1,16 +1,16 @@
 # Screeps
 
-##Introduction:
+## Introduction:
 This repository is to hold all of my Screeps related files.  Screeps is an AI Scripting MMO Game aimed at programmers.  
 You can find the main website for the game at [screeps.com](https://screeps.com/).
 
 
-###Useful Notes for Working Locally:
+### Useful Notes for Working Locally:
 
-####Screeps Autocomplete
+#### Screeps Autocomplete
 [Screeps Autocomplete](https://github.com/Garethp/ScreepsAutocomplete) is a useful project that is compatible with multiple IDEs.
 
-####Point Screeps to another local directory
+#### Point Screeps to another local directory
 You can make screeps find files anywhere on your system by making a symlink. 
 
 To do this on windows first:
