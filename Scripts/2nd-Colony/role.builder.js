@@ -15,6 +15,7 @@ var roleBuilder = {
             var buildTargets = creep.room.find(FIND_CONSTRUCTION_SITES);
             if(buildTargets.length){
                 //Sort the buildTargets so that the highest progress completed % is finished first
+                //TODO, double check this, then sort equal progress by distance
                 buildTargets.sort((a,b) => (b.progress / b.progressTotal) - (a.progress / a.progressTotal));
 
                 if(creep.build(buildTargets[0]) == ERR_NOT_IN_RANGE){
@@ -34,6 +35,14 @@ var roleBuilder = {
             if(creep.withdraw(energyTarget, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
                 creep.moveTo(energyTarget);
             }
+            if(energyTarget == null) {
+                //if there are no energy targets available, harvest the energy ;TODO recondsider this after harvester allocation?
+                var sources = creep.room.find(FIND_SOURCES); //TODO investigate FIND_SOURCES_ACTIVE
+                if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(sources[0]);
+                }
+            }
+
         }
     }
 };

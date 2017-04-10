@@ -26,11 +26,17 @@ var roleCourier = {
                 if(creep.transfer(deliverTargets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(deliverTargets[0]);
                 }
-            }else { //while unable to work act like an upgrader
+            }else {
+                creep.moveTo(Game.flags['Flag1']);
+            }
+            /*
+            //currently not working due to no work body part
+            else { //while unable to work act like an upgrader
                 if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(creep.room.controller);
                 }
             }
+            */
         }
         else {
             var energyTarget = creep.pos.findClosestByPath(FIND_STRUCTURES, {

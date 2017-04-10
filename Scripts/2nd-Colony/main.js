@@ -59,24 +59,34 @@ function creepRecipe(spawn,role) {
     }
     return recipe;
 }
+
+function isClearHarvestLocation(){}
+
+function findHarvestLocationsAroundSource(){}
+
+function findAllHarvestLocations(){}
+
+function assignHarvestLocations(){}
+
 module.exports.loop = function () {
- 
+
+    /*
     //Tower Defence
      var tower = Game.getObjectById('583ae35d6f39766257e63cb2');
      if(tower){
-         /*  //Temporarily disable tower repairing
          var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: (structure) => structure.hits < structure.hitsMax
          });
          if(closestDamagedStructure){
             tower.repair(closestDamagedStructure);
          }
-        */
+
          var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
          if(closestHostile){
             tower.attack(closestHostile);
          }
      }
+     */
     
 
     // Clear Dead Creeps memory
@@ -102,16 +112,18 @@ module.exports.loop = function () {
                     '\nSpawning new harvester: ' + newName);
     }
 
+    else if(builders.length < 6){
+        let newName = Game.spawns['Spawn1'].createCreep(creepRecipe(spawn1,'builder'), ('b' + timeCreated), {role: 'builder'});
+        console.log('Current builder count = ' + builders.length +
+            '\nSpawning new builder: ' + newName);
+    }
+    //TODO not spawn courier if there is no storage
     else if(couriers.length < 2){
         let newName = Game.spawns['Spawn1'].createCreep(creepRecipe(spawn1,'courier'), ('c' + timeCreated), {role: 'courier'});
         console.log('Current courier count = ' + couriers.length +
             '\nSpawning new courier: ' + newName);
     }
-    else if(builders.length < 4){
-        let newName = Game.spawns['Spawn1'].createCreep(creepRecipe(spawn1,'builder'), ('b' + timeCreated), {role: 'builder'});
-        console.log('Current builder count = ' + builders.length +
-            '\nSpawning new builder: ' + newName);
-    }
+
     else if(upgraders.length < 3){
         let newName = Game.spawns['Spawn1'].createCreep(creepRecipe(spawn1,'upgrader'), ('u' + timeCreated), {role: 'upgrader'});
         console.log('Current upgrader count = ' + upgraders.length +

@@ -25,6 +25,14 @@ var roleUpgrader = {
             if(creep.withdraw(energyTargets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
                 creep.moveTo(energyTargets[0]);
             }
+            if(energyTargets[0] == null) {
+                //if there are no energy targets available, harvest the energy ;TODO recondsider this after harvester allocation?
+                var sources = creep.room.find(FIND_SOURCES); //TODO investigate FIND_SOURCES_ACTIVE
+                if (creep.harvest(sources[1]) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(sources[1]);
+                }
+            }
+
         }
 	}
 };
