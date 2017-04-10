@@ -12,12 +12,12 @@ var roleHarvester = {
             var deliverTarget = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: (structure) => {
                     //TODO if a spawner in the same room can't create a basic harvester, only target spawner or extension
-                    return (structure.structureType == STRUCTURE_EXTENSION ||
+                    return ((structure.structureType == STRUCTURE_EXTENSION ||
                             structure.structureType == STRUCTURE_SPAWN ||
                             structure.structureType == STRUCTURE_TOWER) &&
-                                structure.energy < structure.energyCapacity;}
-                            //structure.structureType == STRUCTURE_CONTAINER) &&
-                                //structure.store[RESOURCE_ENERGY] < structure.storeCapacity;}
+                            (structure.energy < structure.energyCapacity))||
+                        (structure.structureType == STRUCTURE_CONTAINER) &&
+                        (structure.store[RESOURCE_ENERGY] < structure.storeCapacity);}
             });
             if(deliverTarget != undefined) {
                 if(creep.transfer(deliverTarget, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {

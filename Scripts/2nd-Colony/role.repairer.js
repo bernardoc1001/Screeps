@@ -15,8 +15,11 @@ var roleRepairer = {
         if(creep.memory.repairing) {
             var targets = creep.room.find(FIND_STRUCTURES, {
                 filter: structure => {
-                    return (structure.structureType != STRUCTURE_WALL) &&
-                            structure.hits < (structure.hitsMax/2);}
+                    return(structure.structureType != STRUCTURE_CONTROLLER) &&
+                        ((structure.hits < (structure.hitsMax/1.3333) && (structure.structureType != STRUCTURE_WALL))||
+                            ((structure.hits < 2500) && (structure.structureType == STRUCTURE_WALL)))
+                        ;}
+
             });
 
             targets.sort((a,b) => a.hits - b.hits);
@@ -37,6 +40,13 @@ var roleRepairer = {
             });
             if(creep.withdraw(energyTarget, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
                 creep.moveTo(energyTarget);
+            }
+            if(energyTarget == null) {
+                //if there are no energy targets available, harvest the energy ;TODO recondsider this after harvester allocation?
+                var sources = creep.room.find(FIND_SOURCES); //TODO investigate FIND_SOURCES_ACTIVE
+                if (creep.harvest(sources[1]) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(sources[1]);
+                }
             }
         }
     }
