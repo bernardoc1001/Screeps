@@ -60,13 +60,80 @@ function creepRecipe(spawn,role) {
     return recipe;
 }
 
-function isClearHarvestLocation(){}
+function isValidHarvestLocation(objArray){
 
-function findHarvestLocationsAroundSource(){}
+    for(let i = 0; i < objArray.length; i++){
+        if((objArray[i].type === 'terrain' && objArray[i].terrain === 'wall') || objArray[i].type === 'source' || (objArray[i].type === 'structure' && objArray[i].structure.structureType !== STRUCTURE_ROAD)){
+            return false;
+        }
+    }
+    return true;
+}
 
-function findAllHarvestLocations(){}
+function findHarvestLocationsAroundSource(source){
+    if(source.pos.y > 0){
+        var top = source.pos.y - 1;
+    }else{
+        var top = source.pos.y;
+    }
+    if(source.pos.x > 0){
+        var left = source.pos.x - 1;
+    }else{
+        var left = source.pos.x;
+    }
+    if(source.pos.y < 49){
+        var bot = source.pos.y + 1;
+    }else{
+        var bot = source.pos.y;
+    }
+    if(source.pos.x < 49){
+        var right = source.pos.x + 1;
+    }else{
+        var right = source.pos.x;
+    }
+
+
+    let area = source.room.lookAtArea(top,left,bot,right);
+    var sourceHarvestLocations = [];
+
+    for(let yKey in area){
+        for(let xKey in area[yKey]){
+            if(isValidHarvestLocation(area[yKey][xKey])){
+                sourceHarvestLocations = sourceHarvestLocations.concat([{"x":xKey, "y":yKey, "roomName": source.pos.roomName}]);
+            }
+        }
+    }
+    return sourceHarvestLocations;
+}
+
+
+function findAllHarvestLocations(){
+    //currently use all my spawns to select the rooms for harvesting ;TODO improve this
+
+    var allHarvestLocations = [];
+    for(let spawn_name in Game.spawns){
+        let spawn = Game.spawns[spawn_name];
+        let sources = spawn.room.find(FIND_SOURCES);
+        //console.log('findAllHarvestLocations sources = ' , JSON.stringify(sources));
+        for(let i = 0; i < sources.length; i++){
+            //console.log('single source in array = ', JSON.stringify(sources[i]));
+            allHarvestLocations = allHarvestLocations.concat(findHarvestLocationsAroundSource(sources[i]));
+        }
+    }
+
+    console.log('All harvest locations: ' , JSON.stringify(allHarvestLocations, null, 2),'\nLength of all harvest locations: ', allHarvestLocations.length);
+    return allHarvestLocations;
+}
 
 function assignHarvestLocations(){}
+
+function testLetScope(){
+    let x = [];
+    for(let i = 0; i < 10; i++){
+        x = x.concat([i]);
+    }
+    console.log('testLetScope result: ', JSON.stringify(x));
+}
 
 module.exports.loop = function () {
 
@@ -96,6 +163,11 @@ module.exports.loop = function () {
             console.log('Clearing non-existing creep memory:', name);
         }
     }
+
+    //=========================test function outputs ==============================
+    findAllHarvestLocations();
+
+    //=============================================================================
 
     //Auto Spawn Creeps, giving harvesters the priority
     var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');

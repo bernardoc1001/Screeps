@@ -17,7 +17,7 @@ var roleRepairer = {
                 filter: structure => {
                     return(structure.structureType != STRUCTURE_CONTROLLER) &&
                         ((structure.hits < (structure.hitsMax/1.3333) && (structure.structureType != STRUCTURE_WALL))||
-                            ((structure.hits < 2500) && (structure.structureType == STRUCTURE_WALL)))
+                            ((structure.hits < 500) && (structure.structureType == STRUCTURE_WALL)))
                         ;}
 
             });
