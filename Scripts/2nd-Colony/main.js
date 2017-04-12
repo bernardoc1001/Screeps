@@ -121,7 +121,7 @@ function findAllHarvestLocations(){
         }
     }
 
-    console.log('All harvest locations: ' , JSON.stringify(allHarvestLocations, null, 2),'\nLength of all harvest locations: ', allHarvestLocations.length);
+    //console.log('All harvest locations: ' , JSON.stringify(allHarvestLocations, null, 2),'\nLength of all harvest locations: ', allHarvestLocations.length);
     return allHarvestLocations;
 }
 
